@@ -5,24 +5,18 @@ import Home from './pages/Home';
 import MuseumDetail from './pages/MuseumDetail';
 import Gallery from './pages/Gallery';
 import Admin from './pages/Admin';
+import Contact from './pages/Contact.jsx';
 import { Language } from '../types';
 import { INITIAL_MUSEUMS, UI_LABELS } from './constants';
 import { translateText } from './services/translationService';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext(null);
 const App = () => {
     const [language, setLanguage] = useState(Language.ENGLISH);
     const [museums, setMuseums] = useState(INITIAL_MUSEUMS);
     const [isAdmin, setIsAdmin] = useState(false);
     const [uiLabels, setUiLabels] = useState(UI_LABELS[Language.ENGLISH]);
-    // Load language from local storage
-    useEffect(() => {
-        const savedLang = localStorage.getItem('museumx_lang');
-        if (savedLang) {
-            const lang = Object.values(Language).includes(savedLang) ? savedLang : Language.ENGLISH;
-            handleSetLanguage(lang);
-        }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
     const translateLabels = useCallback(async (lang) => {
         if (lang === Language.ENGLISH) {
             setUiLabels(UI_LABELS[Language.ENGLISH]);
@@ -110,6 +104,14 @@ const App = () => {
             }
         }
     }, [museums, translateLabels]);
+    // Load language from local storage
+    useEffect(() => {
+        const savedLang = localStorage.getItem('museumx_lang');
+        if (savedLang) {
+            const lang = Object.values(Language).includes(savedLang) ? savedLang : Language.ENGLISH;
+            handleSetLanguage(lang);
+        }
+    }, [handleSetLanguage]);
     const addMuseum = useCallback((newMuseum) => {
         setMuseums([...museums, newMuseum]);
     }, [museums]);
@@ -130,6 +132,7 @@ const App = () => {
                     <Route index element={<Home />} />
                     <Route path="museum/:id" element={<MuseumDetail />} />
                     <Route path="museum/:id/gallery" element={<Gallery />} />
+                    <Route path="contact" element={<Contact />} />
                     <Route path="admin" element={<Admin />} />
                 </Route>
             </Routes>
