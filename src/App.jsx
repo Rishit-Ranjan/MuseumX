@@ -10,13 +10,22 @@ import { Language } from '../types';
 import { INITIAL_MUSEUMS, UI_LABELS } from './constants';
 import { translateText } from './services/translationService';
 
+const getInitialLanguage = () => {
+    if (typeof window === 'undefined') {
+        return Language.ENGLISH;
+    }
+    const savedLang = localStorage.getItem('museumx_lang');
+    return savedLang && Object.values(Language).includes(savedLang) ? savedLang : Language.ENGLISH;
+};
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext(null);
 const App = () => {
-    const [language, setLanguage] = useState(Language.ENGLISH);
+    const initialLanguage = getInitialLanguage();
+    const [language, setLanguage] = useState(initialLanguage);
     const [museums, setMuseums] = useState(INITIAL_MUSEUMS);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [uiLabels, setUiLabels] = useState(UI_LABELS[Language.ENGLISH]);
+    const [uiLabels, setUiLabels] = useState(UI_LABELS[initialLanguage]);
     const translateLabels = useCallback(async (lang) => {
         if (lang === Language.ENGLISH) {
             setUiLabels(UI_LABELS[Language.ENGLISH]);
@@ -39,79 +48,83 @@ const App = () => {
             // Fallback to English is automatic since we started with it
         }
     }, []);
-    // Save language and trigger auto-translation
-    const handleSetLanguage = useCallback(async (lang) => {
+    const handleSetLanguage = useCallback((lang) => {
         setLanguage(lang); // Cast to Language enum if needed
         localStorage.setItem('museumx_lang', lang);
-        // 1. Translate UI Labels
-        translateLabels(lang);
-        // 2. Generic translation trigger for Museum Content
-        if (lang !== Language.ENGLISH) {
-            const needsTranslation = museums.some(m => m.name[lang] === m.name[Language.ENGLISH]);
-            if (needsTranslation) {
+    }, []);
+
+    useEffect(() => {
+        if (language === Language.ENGLISH) {
+            setUiLabels(UI_LABELS[Language.ENGLISH]);
+            return;
+        }
+
+        translateLabels(language);
+
+        const translateMuseums = async () => {
+            const needsTranslation = museums.some(m => m.name[language] === m.name[Language.ENGLISH]);
+            if (!needsTranslation) return;
+
+            try {
                 const updatedMuseums = await Promise.all(museums.map(async (m) => {
-                    // Translate if content is same as source (placeholder)
-                    if (m.name[lang] === m.name[Language.ENGLISH]) {
-                        try {
-                            const newM = {
-                                ...m,
-                                name: { ...m.name },
-                                location: { ...m.location },
-                                shortDescription: { ...m.shortDescription },
-                                description: { ...m.description },
-                                features: { ...m.features },
-                                highlights: [...m.highlights],
-                                galleryImages: [...m.galleryImages]
-                            };
-                            const [tName, tLoc, tShort, tDesc] = await Promise.all([
-                                translateText(m.name[Language.ENGLISH], lang),
-                                translateText(m.location[Language.ENGLISH], lang),
-                                translateText(m.shortDescription[Language.ENGLISH], lang),
-                                translateText(m.description[Language.ENGLISH], lang)
-                            ]);
-                            newM.name[lang] = tName;
-                            newM.location[lang] = tLoc;
-                            newM.shortDescription[lang] = tShort;
-                            newM.description[lang] = tDesc;
-                            if (m.features[Language.ENGLISH]) {
-                                const tFeatures = await Promise.all(m.features[Language.ENGLISH].map(f => translateText(f, lang)));
-                                newM.features[lang] = tFeatures;
-                            }
-                            const tHighlights = await Promise.all(m.highlights.map(async (h) => ({
-                                ...h,
-                                title: { ...h.title, [lang]: await translateText(h.title[Language.ENGLISH], lang) },
-                                description: { ...h.description, [lang]: await translateText(h.description[Language.ENGLISH], lang) }
-                            })));
-                            newM.highlights = tHighlights;
-                            const tGallery = await Promise.all(m.galleryImages.map(async (g) => ({
-                                ...g,
-                                title: { ...g.title, [lang]: await translateText(g.title[Language.ENGLISH], lang) },
-                                description: { ...g.description, [lang]: await translateText(g.description[Language.ENGLISH], lang) },
-                                artist: { ...g.artist, [lang]: await translateText(g.artist[Language.ENGLISH], lang) },
-                                medium: { ...g.medium, [lang]: await translateText(g.medium[Language.ENGLISH], lang) },
-                            })));
-                            newM.galleryImages = tGallery;
-                            return newM;
+                    if (m.name[language] === m.name[Language.ENGLISH]) {
+                        const newM = {
+                            ...m,
+                            name: { ...m.name },
+                            location: { ...m.location },
+                            shortDescription: { ...m.shortDescription },
+                            description: { ...m.description },
+                            features: { ...m.features },
+                            highlights: [...m.highlights],
+                            galleryImages: [...m.galleryImages]
+                        };
+
+                        const [tName, tLoc, tShort, tDesc] = await Promise.all([
+                            translateText(m.name[Language.ENGLISH], language),
+                            translateText(m.location[Language.ENGLISH], language),
+                            translateText(m.shortDescription[Language.ENGLISH], language),
+                            translateText(m.description[Language.ENGLISH], language)
+                        ]);
+
+                        newM.name[language] = tName;
+                        newM.location[language] = tLoc;
+                        newM.shortDescription[language] = tShort;
+                        newM.description[language] = tDesc;
+
+                        if (m.features[Language.ENGLISH]) {
+                            const tFeatures = await Promise.all(m.features[Language.ENGLISH].map(f => translateText(f, language)));
+                            newM.features[language] = tFeatures;
                         }
-                        catch (e) {
-                            console.error(`Failed to translate museum ${m.id} to ${lang}`, e);
-                            return m;
-                        }
+
+                        const tHighlights = await Promise.all(m.highlights.map(async (h) => ({
+                            ...h,
+                            title: { ...h.title, [language]: await translateText(h.title[Language.ENGLISH], language) },
+                            description: { ...h.description, [language]: await translateText(h.description[Language.ENGLISH], language) }
+                        })));
+                        newM.highlights = tHighlights;
+
+                        const tGallery = await Promise.all(m.galleryImages.map(async (g) => ({
+                            ...g,
+                            title: { ...g.title, [language]: await translateText(g.title[Language.ENGLISH], language) },
+                            description: { ...g.description, [language]: await translateText(g.description[Language.ENGLISH], language) },
+                            artist: { ...g.artist, [language]: await translateText(g.artist[Language.ENGLISH], language) },
+                            medium: { ...g.medium, [language]: await translateText(g.medium[Language.ENGLISH], language) }
+                        })));
+                        newM.galleryImages = tGallery;
+                        return newM;
                     }
                     return m;
                 }));
+
                 setMuseums(updatedMuseums);
             }
-        }
-    }, [museums, translateLabels]);
-    // Load language from local storage
-    useEffect(() => {
-        const savedLang = localStorage.getItem('museumx_lang');
-        if (savedLang) {
-            const lang = Object.values(Language).includes(savedLang) ? savedLang : Language.ENGLISH;
-            handleSetLanguage(lang);
-        }
-    }, [handleSetLanguage]);
+            catch (e) {
+                console.error(`Failed to translate museums to ${language}`, e);
+            }
+        };
+
+        translateMuseums();
+    }, [language, museums, translateLabels]);
     const addMuseum = useCallback((newMuseum) => {
         setMuseums([...museums, newMuseum]);
     }, [museums]);
