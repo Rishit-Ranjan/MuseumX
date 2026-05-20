@@ -8,6 +8,7 @@ import Admin from './pages/Admin';
 import { Language } from '../types';
 import { INITIAL_MUSEUMS, UI_LABELS } from './constants';
 import { translateText } from './services/translationService';
+
 export const AppContext = createContext(null);
 const App = () => {
     const [language, setLanguage] = useState(Language.ENGLISH);

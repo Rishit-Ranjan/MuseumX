@@ -1,11 +1,22 @@
 import { Language } from '../types';
 
 // Image imports
-import stateMuseumImg from './assets/images/museum_state-museum-bhopal.jpg';
-import manavSangrahalayaImg from './assets/images/museum_manav-sangrahalaya.jpg';
-import bharatBhavanImg from './assets/images/museum_bharat-bhavan.jpg';
-import tribalMuseumImg from './assets/images/museum_tribal-museum.jpg';
-import ghadarMemorialImg from './assets/images/museum_ghadar-memorial.jpg';
+import stateMuseumImg from './assets/images/state_museum/state_museum.png';
+import manavSangrahalayaImg from './assets/images/manav_sangrahalaya/Manav-sangrahalaya.png';
+import bharatBhavanImg from './assets/images/bharat_bhavan/bharat-bhavan.png';
+import tribalMuseumImg from './assets/images/tribal_museum/tribal-museum.png';
+import ghadarMemorialImg from './assets/images/ghadar_memorial/ghadar_memorial.png';
+
+const galleryImageList = [
+    stateMuseumImg,
+    manavSangrahalayaImg,
+    bharatBhavanImg,
+    tribalMuseumImg,
+    ghadarMemorialImg
+];
+
+const getImgUrl = (id) => galleryImageList[id % galleryImageList.length];
+
 // Helper to generate gallery items with metadata
 const getGalleryItems = (startId, count, type) => {
     return Array.from({ length: count }).map((_, i) => {
