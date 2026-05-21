@@ -32,6 +32,11 @@ const getGalleryItems = (startId, count, type) => {
             descEn = 'A traditional painting depicting forest life and rituals.';
             artistEn = isEven ? 'Jangarh Singh Shyam' : 'Bhuri Bai';
             mediumEn = 'Natural Pigments on Wall';
+            // Hindi
+            var titleHi = `जनजातीय कलाकृति ${i + 1}`;
+            var descHi = 'वन जीवन और परंपराओं को दर्शाती पारंपरिक पेंटिंग।';
+            var artistHi = isEven ? 'जंगारह सिंह श्याम' : 'भूरी बाई';
+            var mediumHi = 'प्राकृतिक रंग दीवार पर';
         }
         else if (type === 'History') {
             titleEn = `Ancient Sculpture ${i + 1}`;
@@ -39,12 +44,22 @@ const getGalleryItems = (startId, count, type) => {
             artistEn = 'Mauryan Artisan';
             date = '3rd Century BC';
             mediumEn = 'Sandstone';
+            // Hindi
+            var titleHi = `प्राचीन मूर्ति ${i + 1}`;
+            var descHi = 'मौर्य काल की नक्काशीदार पत्थर की मूर्ति।';
+            var artistHi = 'मौर्य शिल्पी';
+            var mediumHi = 'रेत पत्थर';
         }
         else if (type === 'Art') {
             titleEn = `Modern Art Piece ${i + 1}`;
             descEn = 'Abstract expressionism capturing the vibrant culture of India.';
             artistEn = isEven ? 'S.H. Raza' : 'M.F. Husain';
             mediumEn = 'Acrylic on Canvas';
+            // Hindi
+            var titleHi = `आधुनिक कला कृति ${i + 1}`;
+            var descHi = 'भारत की जीवंत संस्कृति को पकड़ता आधुनिक कला।';
+            var artistHi = isEven ? 'एस. एच. रज़ा' : 'एम. एफ. हुसैन';
+            var mediumHi = 'कैनवास पर एक्रिलिक';
         }
         else {
             titleEn = `Historical Document ${i + 1}`;
@@ -52,15 +67,19 @@ const getGalleryItems = (startId, count, type) => {
             artistEn = 'Bhopal Archive';
             date = '1984';
             mediumEn = 'Photograph';
+            // Hindi
+            var titleHi = `ऐतिहासिक दस्तावेज़ ${i + 1}`;
+            var descHi = '1984 की घटना से अभिलेखीय फ़ोटो।';
+            var artistHi = 'भोपाल अभिलेखागार';
+            var mediumHi = 'फोटोग्राफ';
         }
-        // Note: Hindi fields initialized with English text to be translated dynamically
         return {
             url: getImgUrl(startId + i),
-            title: { [Language.ENGLISH]: titleEn, [Language.HINDI]: titleEn },
-            description: { [Language.ENGLISH]: descEn, [Language.HINDI]: descEn },
-            artist: { [Language.ENGLISH]: artistEn, [Language.HINDI]: artistEn },
+            title: { [Language.ENGLISH]: titleEn, [Language.HINDI]: titleHi },
+            description: { [Language.ENGLISH]: descEn, [Language.HINDI]: descHi },
+            artist: { [Language.ENGLISH]: artistEn, [Language.HINDI]: artistHi },
             date,
-            medium: { [Language.ENGLISH]: mediumEn, [Language.HINDI]: mediumEn }
+            medium: { [Language.ENGLISH]: mediumEn, [Language.HINDI]: mediumHi }
         };
     });
 };
@@ -80,46 +99,46 @@ export const INITIAL_MUSEUMS = [
         id: 'state-museum-bhopal',
         name: {
             [Language.ENGLISH]: 'State Museum, Bhopal',
-            [Language.HINDI]: 'State Museum, Bhopal'
+            [Language.HINDI]: 'स्टेट म्यूज़ियम, भोपाल'
         },
         location: {
             [Language.ENGLISH]: 'Shyamla Hills, near Bharat Bhavan',
-            [Language.HINDI]: 'Shyamla Hills, near Bharat Bhavan'
+            [Language.HINDI]: 'श्यामला हिल्स, भारत भवन के पास'
         },
         shortDescription: {
             [Language.ENGLISH]: 'The premier museum of Madhya Pradesh housing a vast collection of artifacts.',
-            [Language.HINDI]: 'The premier museum of Madhya Pradesh housing a vast collection of artifacts.'
+            [Language.HINDI]: 'मध्य प्रदेश का प्रमुख संग्रहालय, जिसमें अनेक कलाकृतियाँ संग्रहीत हैं।'
         },
         description: {
             [Language.ENGLISH]: 'Set in a beautiful, sprawling complex, the State Museum is the custodian of Madhya Pradesh\'s rich heritage. From prehistoric fossils to medieval sculpture, it offers a journey through time.',
-            [Language.HINDI]: 'Set in a beautiful, sprawling complex, the State Museum is the custodian of Madhya Pradesh\'s rich heritage. From prehistoric fossils to medieval sculpture, it offers a journey through time.'
+            [Language.HINDI]: 'एक सुंदर विस्तृत परिसर में स्थित, स्टेट म्यूज़ियम मध्य प्रदेश की समृद्ध विरासत का संरक्षक है। प्रागैतिहासिक जीवाश्मों से लेकर मध्यकालीन मूर्तियों तक, यह समय यात्रा प्रदान करता है।'
         },
         image: stateMuseumImg,
         galleryImages: getGalleryItems(100, 6, 'History'),
         features: {
             [Language.ENGLISH]: ['Archaeology', 'Numismatics', 'Fossils', 'Tribal Art'],
-            [Language.HINDI]: ['Archaeology', 'Numismatics', 'Fossils', 'Tribal Art']
+            [Language.HINDI]: ['पुरातत्व', 'सिक्काशास्त्र', 'जीवाश्म', 'जनजातीय कला']
         },
         highlights: [
             {
-                title: { [Language.ENGLISH]: 'Archaeology Section', [Language.HINDI]: 'Archaeology Section' },
+                title: { [Language.ENGLISH]: 'Archaeology Section', [Language.HINDI]: 'पुरातत्व अनुभाग' },
                 description: {
                     [Language.ENGLISH]: 'Features sculptures from Sanchi, Udayagiri, and Khajuraho.',
-                    [Language.HINDI]: 'Features sculptures from Sanchi, Udayagiri, and Khajuraho.'
+                    [Language.HINDI]: 'सांची, उदयगिरि और खजुराहो की मूर्तियाँ यहाँ प्रदर्शित हैं।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Fossil Section', [Language.HINDI]: 'Fossil Section' },
+                title: { [Language.ENGLISH]: 'Fossil Section', [Language.HINDI]: 'जीवाश्म अनुभाग' },
                 description: {
                     [Language.ENGLISH]: 'Includes a 65-million-year-old fossil of a dinosaur egg.',
-                    [Language.HINDI]: 'Includes a 65-million-year-old fossil of a dinosaur egg.'
+                    [Language.HINDI]: 'यहाँ 65 मिलियन वर्ष पुराना डायनासोर अंडे का जीवाश्म शामिल है।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Mansoor Gallery', [Language.HINDI]: 'Mansoor Gallery' },
+                title: { [Language.ENGLISH]: 'Mansoor Gallery', [Language.HINDI]: 'मंसूर गैलरी' },
                 description: {
                     [Language.ENGLISH]: 'Named after the legendary Mughal painter, displaying miniature paintings.',
-                    [Language.HINDI]: 'Named after the legendary Mughal painter, displaying miniature paintings.'
+                    [Language.HINDI]: 'प्रख्यात मुग़ल चित्रकार के नाम पर, लघु चित्रों का प्रदर्शन।'
                 }
             }
         ],
@@ -133,46 +152,46 @@ export const INITIAL_MUSEUMS = [
         id: 'manav-sangrahalaya',
         name: {
             [Language.ENGLISH]: 'Manav Sangrahalaya (IGRMS)',
-            [Language.HINDI]: 'Manav Sangrahalaya (IGRMS)'
+            [Language.HINDI]: 'मानव संग्रहालय (IGRMS)'
         },
         location: {
             [Language.ENGLISH]: 'Shamla Hills, near Upper Lake',
-            [Language.HINDI]: 'Shamla Hills, near Upper Lake'
+            [Language.HINDI]: 'श्यामला हिल्स, अपर लेक के पास'
         },
         shortDescription: {
             [Language.ENGLISH]: 'A massive open-air "Museum of Mankind" spread over 200 acres.',
-            [Language.HINDI]: 'A massive open-air "Museum of Mankind" spread over 200 acres.'
+            [Language.HINDI]: '200 एकड़ में फैला विशाल खुले-आकाश "मानव संग्रहालय"।'
         },
         description: {
             [Language.ENGLISH]: 'Not a conventional museum, IGRMS is a celebration of human evolution and cultural diversity. It features life-size tribal dwellings and open-air exhibits that blend seamlessly with the natural landscape.',
-            [Language.HINDI]: 'Not a conventional museum, IGRMS is a celebration of human evolution and cultural diversity. It features life-size tribal dwellings and open-air exhibits that blend seamlessly with the natural landscape.'
+            [Language.HINDI]: 'IGRMS पारंपरिक संग्रहालय नहीं है; यह मानव विकास और सांस्कृतिक विविधता का उत्सव है। यहाँ जीवन-आकार की जनजातीय आवास और खुली-हवा प्रदर्शनियां हैं।'
         },
         image: manavSangrahalayaImg,
         galleryImages: getGalleryItems(200, 6, 'Tribal'),
         features: {
             [Language.ENGLISH]: ['Open-Air Exhibits', 'Tribal Dwellings', 'Boat Gallery'],
-            [Language.HINDI]: ['Open-Air Exhibits', 'Tribal Dwellings', 'Boat Gallery']
+            [Language.HINDI]: ['खुले प्रदर्शनी', 'जनजातीय आवास', 'बोट गैलरी']
         },
         highlights: [
             {
-                title: { [Language.ENGLISH]: 'Open-Air Exhibits', [Language.HINDI]: 'Open-Air Exhibits' },
+                title: { [Language.ENGLISH]: 'Open-Air Exhibits', [Language.HINDI]: 'खुले प्रदर्शनी' },
                 description: {
                     [Language.ENGLISH]: 'Authentic, life-size replicas of traditional tribal and rural dwellings.',
-                    [Language.HINDI]: 'Authentic, life-size replicas of traditional tribal and rural dwellings.'
+                    [Language.HINDI]: 'परंपरागत जनजातीय और ग्रामीण आवास की वास्तविक जीवन-आकार प्रतिकृतियाँ।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Village Complex', [Language.HINDI]: 'Village Complex' },
+                title: { [Language.ENGLISH]: 'Village Complex', [Language.HINDI]: 'गाँव परिसर' },
                 description: {
                     [Language.ENGLISH]: 'A walk-through replica of a tribal village.',
-                    [Language.HINDI]: 'A walk-through replica of a tribal village.'
+                    [Language.HINDI]: 'एक चलकर देखने योग्य जनजातीय गाँव की प्रतिकृति।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Boat Gallery', [Language.HINDI]: 'Boat Gallery' },
+                title: { [Language.ENGLISH]: 'Boat Gallery', [Language.HINDI]: 'बोट गैलरी' },
                 description: {
                     [Language.ENGLISH]: 'A unique museum on a boat showcasing maritime culture.',
-                    [Language.HINDI]: 'A unique museum on a boat showcasing maritime culture.'
+                    [Language.HINDI]: 'समुद्री संस्कृति को प्रदर्शित करने वाला नाव पर अद्वितीय संग्रहालय।'
                 }
             }
         ],
@@ -186,46 +205,46 @@ export const INITIAL_MUSEUMS = [
         id: 'bharat-bhavan',
         name: {
             [Language.ENGLISH]: 'Bharat Bhavan',
-            [Language.HINDI]: 'Bharat Bhavan'
+            [Language.HINDI]: 'भारत भवन'
         },
         location: {
             [Language.ENGLISH]: 'Shamla Hills, near Upper Lake',
-            [Language.HINDI]: 'Shamla Hills, near Upper Lake'
+            [Language.HINDI]: 'श्यामला हिल्स, अपर लेक के पास'
         },
         shortDescription: {
             [Language.ENGLISH]: 'A multi-arts complex housing a superb art museum for art lovers.',
-            [Language.HINDI]: 'A multi-arts complex housing a superb art museum for art lovers.'
+            [Language.HINDI]: 'कला प्रेमियों के लिए उत्कृष्ट कला संग्रहालय वाला बहु-कलात्मक परिसर।'
         },
         description: {
             [Language.ENGLISH]: 'Designed by Charles Correa, Bharat Bhavan is a center for the performing and visual arts. The Roopankar Museum within it is a treasure trove of tribal and modern Indian art.',
-            [Language.HINDI]: 'Designed by Charles Correa, Bharat Bhavan is a center for the performing and visual arts. The Roopankar Museum within it is a treasure trove of tribal and modern Indian art.'
+            [Language.HINDI]: 'चार्ल्स कोरेया द्वारा डिजाइन किया गया, भारत भवन प्रदर्शन और दृश्य कलाओं का एक केंद्र है। इसके अंदर रुपंकर म्यूज़ियम में जनजातीय और आधुनिक भारतीय कला का खज़ाना है।'
         },
         image: bharatBhavanImg,
         galleryImages: getGalleryItems(300, 5, 'Art'),
         features: {
             [Language.ENGLISH]: ['Modern Art', 'Tribal Art', 'Graphic Studio', 'Theater'],
-            [Language.HINDI]: ['Modern Art', 'Tribal Art', 'Graphic Studio', 'Theater']
+            [Language.HINDI]: ['आधुनिक कला', 'जनजातीय कला', 'ग्राफिक स्टूडियो', 'थिएटर']
         },
         highlights: [
             {
-                title: { [Language.ENGLISH]: 'Roopankar Museum of Arts', [Language.HINDI]: 'Roopankar Museum of Arts' },
+                title: { [Language.ENGLISH]: 'Roopankar Museum of Arts', [Language.HINDI]: 'रूपांकर कला संग्रहालय' },
                 description: {
                     [Language.ENGLISH]: 'Excellent collection of indigenous, tribal, and contemporary Indian art.',
-                    [Language.HINDI]: 'Excellent collection of indigenous, tribal, and contemporary Indian art.'
+                    [Language.HINDI]: 'देशीय, जनजातीय और समकालीन भारतीय कला का उत्कृष्ट संग्रह।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Collection', [Language.HINDI]: 'Collection' },
+                title: { [Language.ENGLISH]: 'Collection', [Language.HINDI]: 'संग्रह' },
                 description: {
                     [Language.ENGLISH]: 'Gond and Bhil paintings, terracotta works, and canvases by modern masters.',
-                    [Language.HINDI]: 'Gond and Bhil paintings, terracotta works, and canvases by modern masters.'
+                    [Language.HINDI]: 'गोंड और भील चित्रकला, टेराकोटा कार्य और आधुनिक कलाकारों के कैनवास।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Graphic Studio', [Language.HINDI]: 'Graphic Studio' },
+                title: { [Language.ENGLISH]: 'Graphic Studio', [Language.HINDI]: 'ग्राफिक स्टूडियो' },
                 description: {
                     [Language.ENGLISH]: 'Live print-making studio.',
-                    [Language.HINDI]: 'Live print-making studio.'
+                    [Language.HINDI]: 'लाइव प्रिंट-निर्माण स्टूडियो।'
                 }
             }
         ],
@@ -239,46 +258,46 @@ export const INITIAL_MUSEUMS = [
         id: 'tribal-museum',
         name: {
             [Language.ENGLISH]: 'Tribal Museum',
-            [Language.HINDI]: 'Tribal Museum'
+            [Language.HINDI]: 'जनजातीय संग्रहालय'
         },
         location: {
             [Language.ENGLISH]: 'Next to State Museum, Shyamla Hills',
-            [Language.HINDI]: 'Next to State Museum, Shyamla Hills'
+            [Language.HINDI]: 'स्टेट म्यूज़ियम के बगल में, श्यामला हिल्स'
         },
         shortDescription: {
             [Language.ENGLISH]: 'A vibrant museum dedicated exclusively to the tribal communities of MP.',
-            [Language.HINDI]: 'A vibrant museum dedicated exclusively to the tribal communities of MP.'
+            [Language.HINDI]: 'मध्य प्रदेश की जनजातीय समुदायों को समर्पित एक जीवंत संग्रहालय।'
         },
         description: {
             [Language.ENGLISH]: 'This museum is not just about artifacts; it is about the living traditions of the Gond, Bhil, Baiga, and Korku tribes. The architecture and installations are immersive and colorful.',
-            [Language.HINDI]: 'This museum is not just about artifacts; it is about the living traditions of the Gond, Bhil, Baiga, and Korku tribes. The architecture and installations are immersive and colorful.'
+            [Language.HINDI]: 'यह संग्रहालय केवल कलाकृतियों के बारे में नहीं है; यह गोंड, भील, बैगा और कोरकू जनजातियों की जीवंत परंपराओं के बारे में है। इसकी वास्तुकला और प्रदर्शनियाँ इमर्सिव और रंगीन हैं।'
         },
         image: tribalMuseumImg,
         galleryImages: getGalleryItems(400, 6, 'Tribal'),
         features: {
             [Language.ENGLISH]: ['Interactive Displays', 'Thematic Galleries', 'Art Shop'],
-            [Language.HINDI]: ['Interactive Displays', 'Thematic Galleries', 'Art Shop']
+            [Language.HINDI]: ['इंटरैक्टिव डिस्प्ले', 'थीमैटिक गैलरी', 'आर्ट शॉप']
         },
         highlights: [
             {
-                title: { [Language.ENGLISH]: 'Thematic Galleries', [Language.HINDI]: 'Thematic Galleries' },
+                title: { [Language.ENGLISH]: 'Thematic Galleries', [Language.HINDI]: 'थीमैटिक गैलरी' },
                 description: {
                     [Language.ENGLISH]: 'Dedicated to different tribes, showcasing rituals, music, and daily life.',
-                    [Language.HINDI]: 'Dedicated to different tribes, showcasing rituals, music, and daily life.'
+                    [Language.HINDI]: 'विभिन्न जनजातियों को समर्पित, रीति-रिवाज़, संगीत और दैनिक जीवन को दर्शाती प्रदर्शनियाँ।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Interactive Displays', [Language.HINDI]: 'Interactive Displays' },
+                title: { [Language.ENGLISH]: 'Interactive Displays', [Language.HINDI]: 'इंटरैक्टिव डिस्प्ले' },
                 description: {
                     [Language.ENGLISH]: 'Uses sound, light, and life-size installations.',
-                    [Language.HINDI]: 'Uses sound, light, and life-size installations.'
+                    [Language.HINDI]: 'ध्वनि, प्रकाश और जीवन-आकार की инस्टॉलेशन का उपयोग।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Art Shop', [Language.HINDI]: 'Art Shop' },
+                title: { [Language.ENGLISH]: 'Art Shop', [Language.HINDI]: 'आर्ट शॉप' },
                 description: {
                     [Language.ENGLISH]: 'Sells authentic tribal handicrafts.',
-                    [Language.HINDI]: 'Sells authentic tribal handicrafts.'
+                    [Language.HINDI]: 'प्रामाणिक जनजातीय हस्तशिल्प बेचता है।'
                 }
             }
         ],
@@ -292,39 +311,39 @@ export const INITIAL_MUSEUMS = [
         id: 'ghadar-memorial',
         name: {
             [Language.ENGLISH]: 'Ghadar Memorial Museum',
-            [Language.HINDI]: 'Ghadar Memorial Museum'
+            [Language.HINDI]: 'घिड़र मेमोरियल म्यूज़ियम'
         },
         location: {
             [Language.ENGLISH]: 'Hamidia Road, near Taj-ul-Masajid',
-            [Language.HINDI]: 'Hamidia Road, near Taj-ul-Masajid'
+            [Language.HINDI]: 'हमिदिया रोड, ताज-उल-मस्जिद के पास'
         },
         shortDescription: {
             [Language.ENGLISH]: 'Housed in the historic building of the Bhopal Gas Tragedy.',
-            [Language.HINDI]: 'Housed in the historic building of the Bhopal Gas Tragedy.'
+            [Language.HINDI]: 'भोपाल गैस त्रासदी की ऐतिहासिक इमारत में स्थित।'
         },
         description: {
             [Language.ENGLISH]: 'A poignant reminder of the 1984 tragedy, this museum documents the events, aftermath, and struggle for justice of the world\'s worst industrial disaster.',
-            [Language.HINDI]: 'A poignant reminder of the 1984 tragedy, this museum documents the events, aftermath, and struggle for justice of the world\'s worst industrial disaster.'
+            [Language.HINDI]: '1984 की त्रासदी की एक मार्मिक स्मृति, यह संग्रहालय घटनाओं, परिणामी प्रभाव और न्याय के संघर्ष का दस्तावेजीकरण करता है।'
         },
         image: ghadarMemorialImg,
         galleryImages: getGalleryItems(500, 4, 'Modern'),
         features: {
             [Language.ENGLISH]: ['Historical Records', 'Photography', 'Industrial History'],
-            [Language.HINDI]: ['Historical Records', 'Photography', 'Industrial History']
+            [Language.HINDI]: ['ऐतिहासिक अभिलेख', 'फोटोग्राफी', 'औद्योगिक इतिहास']
         },
         highlights: [
             {
-                title: { [Language.ENGLISH]: 'A Memorial', [Language.HINDI]: 'A Memorial' },
+                title: { [Language.ENGLISH]: 'A Memorial', [Language.HINDI]: 'स्मारक' },
                 description: {
                     [Language.ENGLISH]: 'Serves as a sobering reminder of December 2-3, 1984.',
-                    [Language.HINDI]: 'Serves as a sobering reminder of December 2-3, 1984.'
+                    [Language.HINDI]: '2-3 दिसंबर, 1984 की घटना की गंभीर स्मृति प्रस्तुत करता है।'
                 }
             },
             {
-                title: { [Language.ENGLISH]: 'Exhibits', [Language.HINDI]: 'Exhibits' },
+                title: { [Language.ENGLISH]: 'Exhibits', [Language.HINDI]: 'प्रदर्शनी' },
                 description: {
                     [Language.ENGLISH]: 'Photographs, documents, and news clippings detailing the event.',
-                    [Language.HINDI]: 'Photographs, documents, and news clippings detailing the event.'
+                    [Language.HINDI]: 'घटना से संबंधित फ़ोटो, दस्तावेज़ और समाचार क्लिपिंग्स।'
                 }
             }
         ],
@@ -386,6 +405,10 @@ const ENGLISH_LABELS = {
     logout: 'Logout',
     deleteMock: 'Delete (Mock)'
 };
+// Add hero and featured labels
+ENGLISH_LABELS.featuredExhibition = 'Featured Exhibition';
+ENGLISH_LABELS.heroBadge = 'Explore the Heritage of Bhopal';
+ENGLISH_LABELS.heroTagline = 'Discover the rich heritage, tribal culture, and artistic legacy of the City of Lakes through an immersive digital experience.';
 // Hindi UI labels (local fallback when translation API is not configured)
 const HINDI_LABELS = {
     home: 'होम',
@@ -437,6 +460,10 @@ const HINDI_LABELS = {
     logout: 'लॉगआउट',
     deleteMock: 'हटाएं (नकली)'
 };
+// Add hero and featured labels in Hindi
+HINDI_LABELS.featuredExhibition = 'प्रमुख प्रदर्शनी';
+HINDI_LABELS.heroBadge = 'भोपाल की विरासत खोजें';
+HINDI_LABELS.heroTagline = 'डिस्कवर द रिच हेरिटेज, जनजातीय संस्कृति और कला विरासत ऑफ़ सिटी ऑफ़ लेक्स थ्रू ए इमर्सिव डिजिटल एक्सपीरियंस.';
 export const UI_LABELS = {
     [Language.ENGLISH]: ENGLISH_LABELS,
     [Language.HINDI]: HINDI_LABELS // Local Hindi fallback labels
