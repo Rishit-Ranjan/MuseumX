@@ -59,5 +59,5 @@ npm run preview
 
 ## Additions
 
-use the Admin page to create entries at runtime.
+Use the Admin page to create entries at runtime.
 
