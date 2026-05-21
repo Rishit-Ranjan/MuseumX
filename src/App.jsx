@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect, useCallback } from 'react';
+import React, { useState, createContext, useEffect, useCallback, useMemo } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -48,26 +48,34 @@ const App = () => {
     const handleSetLanguage = useCallback((lang) => {
         setLanguage(lang); // Cast to Language enum if needed
         localStorage.setItem('museumx_lang', lang);
-        // Update UI labels synchronously if they exist in constants
+        // Update UI labels synchronously if they exist in constants; 
+        // otherwise reset to English so the useEffect can detect a translation is needed.
         if (UI_LABELS[lang]) {
             setUiLabels(UI_LABELS[lang]);
+        } else {
+            setUiLabels(UI_LABELS[Language.ENGLISH]);
         }
     }, []);
 
     useEffect(() => {
-        if (language !== Language.ENGLISH && !UI_LABELS[language]) {
-            translateLabels(language);
+        // Only translate if we are not in English, don't have static labels, 
+        // AND the current labels are still the English ones (indicating translation hasn't happened yet).
+        if (language !== Language.ENGLISH && !UI_LABELS[language] && uiLabels === UI_LABELS[Language.ENGLISH]) {
+            // Defer calling translateLabels to avoid synchronous setState inside an effect
+            const timer = setTimeout(() => { translateLabels(language); }, 0);
+            return () => clearTimeout(timer);
         }
 
         if (language === Language.ENGLISH) return;
 
         const translateMuseums = async () => {
-            const needsTranslation = museums.some(m => m.name[language] === m.name[Language.ENGLISH]);
-            if (!needsTranslation) return;
+            // Check if any museum lacks translation for the current language
+            const untranslatedMuseums = museums.filter(m => !m.name[language]);
+            if (untranslatedMuseums.length === 0) return;
 
             try {
                 const updatedMuseums = await Promise.all(museums.map(async (m) => {
-                    if (m.name[language] === m.name[Language.ENGLISH]) {
+                    if (!m.name[language]) {
                         const newM = {
                             ...m,
                             name: { ...m.name },
@@ -124,12 +132,15 @@ const App = () => {
         };
 
         translateMuseums();
-    }, [language, museums, translateLabels]);
+    }, [language, museums, translateLabels, uiLabels]);
+
     const addMuseum = useCallback((newMuseum) => {
-        setMuseums([...museums, newMuseum]);
-    }, [museums]);
+        setMuseums(prev => [...prev, newMuseum]);
+    }, []);
+
     const toggleAdmin = useCallback(() => setIsAdmin(current => !current), []);
-    const contextValue = {
+
+    const contextValue = useMemo(() => ({
         language,
         setLanguage: handleSetLanguage,
         museums,
@@ -137,7 +148,8 @@ const App = () => {
         isAdmin,
         toggleAdmin,
         uiLabels
-    };
+    }), [language, handleSetLanguage, museums, addMuseum, isAdmin, toggleAdmin, uiLabels]);
+
     return (<AppContext.Provider value={contextValue}>
         <Router>
             <Routes>
