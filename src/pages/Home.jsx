@@ -78,7 +78,7 @@ const Home = () => {
             <Sparkles size={16} className="text-amber-400" />
             <span className="text-slate-300 text-sm font-medium">{labels.heroBadge}</span>
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-white to-amber-200">MuseumX</h1>
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-white to-amber-200">{labels.appName || 'MuseumX'}</h1>
           <p className="text-xl md:text-2xl text-slate-300 mb-10 font-light max-w-2xl mx-auto leading-relaxed">{labels.heroTagline}</p>
 
           <div className="relative max-w-xl mx-auto group">
