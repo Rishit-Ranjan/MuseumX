@@ -59,5 +59,5 @@ npm run preview
 
 ## Additions
 
-To add a museum entry, extend `src/constants.js` with a new museum object and gallery assets, or use the Admin page to create entries at runtime.
+use the Admin page to create entries at runtime.
 
