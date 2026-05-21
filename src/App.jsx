@@ -25,15 +25,12 @@ const App = () => {
     const [language, setLanguage] = useState(initialLanguage);
     const [museums, setMuseums] = useState(INITIAL_MUSEUMS);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [uiLabels, setUiLabels] = useState(UI_LABELS[initialLanguage]);
+    const [uiLabels, setUiLabels] = useState(UI_LABELS[initialLanguage] || UI_LABELS[Language.ENGLISH]);
+
     const translateLabels = useCallback(async (lang) => {
-        if (lang === Language.ENGLISH) {
-            setUiLabels(UI_LABELS[Language.ENGLISH]);
-            return;
-        }
         const sourceLabels = UI_LABELS[Language.ENGLISH];
         const newLabels = { ...sourceLabels };
-        // We can translate keys in parallel
+        // We can translate keys in parallel using the translation service if available
         const keys = Object.keys(sourceLabels);
         const textsToTranslate = Object.values(sourceLabels);
         try {
@@ -45,21 +42,24 @@ const App = () => {
         }
         catch (error) {
             console.error("Error translating UI labels:", error);
-            // Fallback to English is automatic since we started with it
+            // If translation API fails, fallback to English (or previously set labels)
         }
     }, []);
     const handleSetLanguage = useCallback((lang) => {
         setLanguage(lang); // Cast to Language enum if needed
         localStorage.setItem('museumx_lang', lang);
+        // Update UI labels synchronously if they exist in constants
+        if (UI_LABELS[lang]) {
+            setUiLabels(UI_LABELS[lang]);
+        }
     }, []);
 
     useEffect(() => {
-        if (language === Language.ENGLISH) {
-            setUiLabels(UI_LABELS[Language.ENGLISH]);
-            return;
+        if (language !== Language.ENGLISH && !UI_LABELS[language]) {
+            translateLabels(language);
         }
 
-        translateLabels(language);
+        if (language === Language.ENGLISH) return;
 
         const translateMuseums = async () => {
             const needsTranslation = museums.some(m => m.name[language] === m.name[Language.ENGLISH]);

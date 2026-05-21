@@ -386,7 +386,58 @@ const ENGLISH_LABELS = {
     logout: 'Logout',
     deleteMock: 'Delete (Mock)'
 };
+// Hindi UI labels (local fallback when translation API is not configured)
+const HINDI_LABELS = {
+    home: 'होम',
+    explore: 'संग्रहालय खोजें',
+    gallery: 'गेलरी',
+    admin: 'प्रशासक',
+    contact: 'संपर्क',
+    search: 'संग्रहालय खोजें...',
+    readMore: 'और पढ़ें',
+    virtualGuide: 'एआई क्यूरेटर',
+    location: 'स्थान',
+    highlights: 'मुख्य आकर्षण',
+    audio: 'ऑडियो गाइड',
+    video: 'वीडियो टूर',
+    features: 'विशेषताएँ',
+    back: 'वापस',
+    adminPanel: 'प्रशासन पैनल',
+    addMuseum: 'नया संग्रहालय जोड़ें',
+    digitalGuide: 'डिजिटल मीडिया गाइड',
+    watchVideo: 'वीडियो देखें',
+    listenAudio: 'ऑडियो सुनें',
+    nowPlaying: 'अब चल रहा है',
+    selectLang: 'मीडिया भाषा',
+    // Footer
+    privacy: 'गोपनीयता',
+    terms: 'शर्तें',
+    copyright: 'MuseumX Inc.',
+    // Gallery
+    digitalGallery: 'डिजिटल गैलरी संग्रह',
+    clickExpand: 'विस्तारित करने के लिए क्लिक करें',
+    artist: 'कलाकार',
+    date: 'तिथि',
+    medium: 'माध्यम',
+    // Chat
+    aiHeader: 'एआई क्यूरेटर (लोकल)',
+    askCurator: 'क्यूरेटर से पूछें',
+    chatPlaceholder: 'संग्रहालय के बारे में पूछें...',
+    processing: 'प्रक्रियाधीन...',
+    initialGreeting: 'नमस्ते! मैं {museum} के लिए आपका एआई क्यूरेटर हूँ। मुझसे प्रदर्शनियों, इतिहास, या समय के बारे में पूछें!',
+    // Museum Detail & Misc
+    locateMap: 'मानचित्र पर स्थान-पकड़ें',
+    mediaUnavailable: 'इस भाषा के लिए मीडिया उपलब्ध नहीं है।',
+    // Admin
+    museumNameLabel: 'संग्रहालय का नाम',
+    locationLabel: 'स्थान',
+    currentMuseums: 'वर्तमान संग्रहालय',
+    accessRestricted: 'पहुँच केवल अधिकृत कर्मियों के लिए प्रतिबंधित है।',
+    loginAdmin: 'प्रशासक के रूप में लॉगिन करें',
+    logout: 'लॉगआउट',
+    deleteMock: 'हटाएं (नकली)'
+};
 export const UI_LABELS = {
     [Language.ENGLISH]: ENGLISH_LABELS,
-    [Language.HINDI]: ENGLISH_LABELS // Initialized with English, will be translated dynamically in App.tsx
+    [Language.HINDI]: HINDI_LABELS // Local Hindi fallback labels
 };
