@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import MuseumDetail from './pages/MuseumDetail';
 import Gallery from './pages/Gallery';
 import Admin from './pages/Admin';
-import Contact from './pages/Contact.jsx';
+import Contact from './pages/Contact';
 import { Language } from '../types';
 import { INITIAL_MUSEUMS, UI_LABELS } from './constants';
 import { translateText } from './services/translationService';
