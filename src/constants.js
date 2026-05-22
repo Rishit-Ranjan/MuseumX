@@ -28,55 +28,54 @@ const getGalleryItems = (startId, count, type) => {
         let mediumEn = 'Mixed Media';
         let titleHi = '';
         let descHi = '';
-        let artistHi = '';
-        let mediumHi = '';
+        let artistHi = 'Unknown';
+        let mediumHi = 'Mixed Media';
         let date = isEven ? '1992' : '2005';
-        if (type === 'Tribal') {
-            titleEn = `Tribal Artifact ${i + 1}`;
-            descEn = 'A traditional painting depicting forest life and rituals.';
-            artistEn = isEven ? 'Jangarh Singh Shyam' : 'Bhuri Bai';
-            mediumEn = 'Natural Pigments on Wall';
-            // Hindi
-            titleHi = `जनजातीय कलाकृति ${i + 1}`;
-            descHi = 'वन जीवन और परंपराओं को दर्शाती पारंपरिक पेंटिंग।';
-            artistHi = isEven ? 'जंगारह सिंह श्याम' : 'भूरी बाई';
-            mediumHi = 'प्राकृतिक रंग दीवार पर';
+
+        switch (type) {
+            case 'Tribal':
+                titleEn = `Tribal Artifact ${i + 1}`;
+                descEn = 'A traditional painting depicting forest life and rituals.';
+                artistEn = isEven ? 'Jangarh Singh Shyam' : 'Bhuri Bai';
+                mediumEn = 'Natural Pigments on Wall';
+                titleHi = `जनजातीय कलाकृति ${i + 1}`;
+                descHi = 'वन जीवन और परंपराओं को दर्शाती पारंपरिक पेंटिंग।';
+                artistHi = isEven ? 'जंगारह सिंह श्याम' : 'भूरी बाई';
+                mediumHi = 'प्राकृतिक रंग दीवार पर';
+                break;
+            case 'History':
+                titleEn = `Ancient Sculpture ${i + 1}`;
+                descEn = 'Carved stone sculpture from the Mauryan period.';
+                artistEn = 'Mauryan Artisan';
+                date = '3rd Century BC';
+                mediumEn = 'Sandstone';
+                titleHi = `प्राचीन मूर्ति ${i + 1}`;
+                descHi = 'मौर्य काल की नक्काशीदार पत्थर की मूर्ति।';
+                artistHi = 'मौर्य शिल्पी';
+                mediumHi = 'रेत पत्थर';
+                break;
+            case 'Art':
+                titleEn = `Modern Art Piece ${i + 1}`;
+                descEn = 'Abstract expressionism capturing the vibrant culture of India.';
+                artistEn = isEven ? 'S.H. Raza' : 'M.F. Husain';
+                mediumEn = 'Acrylic on Canvas';
+                titleHi = `आधुनिक कला कृति ${i + 1}`;
+                descHi = 'भारत की जीवंत संस्कृति को पकड़ता आधुनिक कला।';
+                artistHi = isEven ? 'एस. एच. रज़ा' : 'एम. एफ. हुसैन';
+                mediumHi = 'कैनवास पर एक्रिलिक';
+                break;
+            default:
+                titleEn = `Historical Document ${i + 1}`;
+                descEn = 'Archival photograph from the 1984 incident.';
+                artistEn = 'Bhopal Archive';
+                date = '1984';
+                mediumEn = 'Photograph';
+                titleHi = `ऐतिहासिक दस्तावेज़ ${i + 1}`;
+                descHi = '1984 की घटना से अभिलेखीय फ़ोटो।';
+                artistHi = 'भोपाल अभिलेखागार';
+                mediumHi = 'फोटोग्राफ';
         }
-        else if (type === 'History') {
-            titleEn = `Ancient Sculpture ${i + 1}`;
-            descEn = 'Carved stone sculpture from the Mauryan period.';
-            artistEn = 'Mauryan Artisan';
-            date = '3rd Century BC';
-            mediumEn = 'Sandstone';
-            // Hindi
-            titleHi = `प्राचीन मूर्ति ${i + 1}`;
-            descHi = 'मौर्य काल की नक्काशीदार पत्थर की मूर्ति।';
-            artistHi = 'मौर्य शिल्पी';
-            mediumHi = 'रेत पत्थर';
-        }
-        else if (type === 'Art') {
-            titleEn = `Modern Art Piece ${i + 1}`;
-            descEn = 'Abstract expressionism capturing the vibrant culture of India.';
-            artistEn = isEven ? 'S.H. Raza' : 'M.F. Husain';
-            mediumEn = 'Acrylic on Canvas';
-            // Hindi
-            titleHi = `आधुनिक कला कृति ${i + 1}`;
-            descHi = 'भारत की जीवंत संस्कृति को पकड़ता आधुनिक कला।';
-            artistHi = isEven ? 'एस. एच. रज़ा' : 'एम. एफ. हुसैन';
-            mediumHi = 'कैनवास पर एक्रिलिक';
-        }
-        else {
-            titleEn = `Historical Document ${i + 1}`;
-            descEn = 'Archival photograph from the 1984 incident.';
-            artistEn = 'Bhopal Archive';
-            date = '1984';
-            mediumEn = 'Photograph';
-            // Hindi
-            titleHi = `ऐतिहासिक दस्तावेज़ ${i + 1}`;
-            descHi = '1984 की घटना से अभिलेखीय फ़ोटो।';
-            artistHi = 'भोपाल अभिलेखागार';
-            mediumHi = 'फोटोग्राफ';
-        }
+
         return {
             url: getImgUrl(startId + i),
             title: { [Language.ENGLISH]: titleEn, [Language.HINDI]: titleHi },
