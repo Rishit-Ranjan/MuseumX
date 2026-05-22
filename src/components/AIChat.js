@@ -41,7 +41,7 @@ const AIChat = ({ museumName, museumContext }) => {
             const responseText = await sendMessageToLocalAI(chatSessionRef.current, userMsg.text);
             setMessages(prev => [...prev, { role: 'model', text: responseText, timestamp: Date.now() }]);
         }
-        catch (error) {
+        catch {
             setMessages(prev => [...prev, { role: 'model', text: "I'm having trouble processing that right now.", timestamp: Date.now() }]);
         }
         finally {

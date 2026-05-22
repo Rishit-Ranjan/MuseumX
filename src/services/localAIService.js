@@ -20,7 +20,7 @@ export const sendMessageToLocalAI = async (session, message) => {
         return `${museumName} is open from 10:30 AM to 5:30 PM, Tuesday through Sunday. Closed on Mondays.`;
     }
     if (msg.match(/ticket|price|cost|entry|fee/)) {
-        return "Entry fee is ₹20 for Indian citizens and ₹400 for foreign tourists. Camera fees are extra.";
+        return "Entry fee is ₹20 for Indian citizens and ₹200 for foreign tourists. Camera fees are extra.";
     }
     if (msg.match(/location|where|address|reach/)) {
         return `${museumName} is located in the scenic Shyamla Hills area of Bhopal. You can easily reach here by cab or auto-rickshaw.`;

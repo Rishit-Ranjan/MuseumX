@@ -1,10 +1,10 @@
 // Securely load the key from environment variables
-const API_KEY = process.env.GOOGLE_TRANSLATE_API_KEY || '';
+const API_KEY = import.meta.env.VITE_GOOGLE_TRANSLATE_API_KEY || process.env.GOOGLE_TRANSLATE_API_KEY || '';
 export const translateText = async (text, target) => {
     if (!text)
         return '';
     if (!API_KEY) {
-        console.warn('Google Translate API Key is missing in environment variables (process.env.GOOGLE_TRANSLATE_API_KEY). returning original text.');
+        console.warn('Google Translate API Key is missing in environment variables (import.meta.env.VITE_GOOGLE_TRANSLATE_API_KEY or process.env.GOOGLE_TRANSLATE_API_KEY). returning original text.');
         return text;
     }
     const API_URL = 'https://translation.googleapis.com/language/translate/v2';

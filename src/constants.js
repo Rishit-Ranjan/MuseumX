@@ -471,3 +471,7 @@ export const UI_LABELS = {
     [Language.ENGLISH]: ENGLISH_LABELS,
     [Language.HINDI]: HINDI_LABELS // Local Hindi fallback labels
 };
+export const LANGUAGE_NAMES = {
+    [Language.ENGLISH]: 'English',
+    [Language.HINDI]: 'Hindi'
+};
