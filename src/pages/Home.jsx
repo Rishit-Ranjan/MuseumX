@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight, Search, ChevronLeft, ChevronRight, Star, Sparkles } from 'lucide-react';
 import { AppContext } from '../App';
+import { Language } from '../../types';
 
 const ExhibitionSlider = ({ museums = [] }) => {
   const [current, setCurrent] = useState(0);
@@ -67,7 +68,12 @@ const Home = () => {
   const { museums = [], language, uiLabels: labels } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filtered = museums.filter((m) => m.name[language].toLowerCase().includes(searchTerm.toLowerCase()) || m.location[language].toLowerCase().includes(searchTerm.toLowerCase()));
+  const filtered = museums.filter((m) => {
+    const name = m.name[language] || m.name[Language.ENGLISH] || '';
+    const location = m.location[language] || m.location[Language.ENGLISH] || '';
+    return name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+           location.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="pb-20">
@@ -105,19 +111,19 @@ const Home = () => {
           {filtered.map((museum) => (
             <Link key={museum.id} to={`/museum/${museum.id}`} className="group bg-slate-900/50 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
               <div className="relative h-64 overflow-hidden">
-                <img src={museum.image} alt={museum.name[language]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <img src={museum.image} alt={museum.name[language] || museum.name[Language.ENGLISH]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-90" />
                 <div className="absolute bottom-5 left-5 right-5 z-10">
-                  <h3 className="text-2xl font-bold text-white mb-2">{museum.name[language]}</h3>
-                  <div className="flex items-center text-slate-400 text-sm gap-1.5"><MapPin size={14} className="text-amber-500" /> <span className="truncate">{museum.location[language]}</span></div>
+                  <h3 className="text-2xl font-bold text-white mb-2">{museum.name[language] || museum.name[Language.ENGLISH]}</h3>
+                  <div className="flex items-center text-slate-400 text-sm gap-1.5"><MapPin size={14} className="text-amber-500" /> <span className="truncate">{museum.location[language] || museum.location[Language.ENGLISH]}</span></div>
                 </div>
               </div>
 
               <div className="p-6 pt-2 flex-1 flex flex-col">
-                <p className="text-slate-400 text-sm mb-6 flex-1 leading-relaxed border-b border-slate-800 pb-4">{museum.shortDescription[language]}</p>
+                <p className="text-slate-400 text-sm mb-6 flex-1 leading-relaxed border-b border-slate-800 pb-4">{museum.shortDescription[language] || museum.shortDescription[Language.ENGLISH]}</p>
                 <div className="flex items-center justify-between mt-auto">
                   <div className="flex gap-2">
-                    {museum.features[language].slice(0, 2).map((feature, i) => (
+                    {(museum.features[language] || museum.features[Language.ENGLISH] || []).slice(0, 2).map((feature, i) => (
                       <span key={i} className="px-2.5 py-1 bg-slate-800 text-slate-300 text-xs font-medium rounded-lg border border-slate-700">{feature}</span>
                     ))}
                   </div>

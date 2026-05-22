@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { AppContext } from '../App';
 import { ArrowLeft, X, ChevronLeft, ChevronRight, Grid, Calendar, User, Paintbrush } from 'lucide-react';
+import { Language } from '../../types';
 const Gallery = () => {
     const { id } = useParams();
     const { museums, language, uiLabels: labels } = useContext(AppContext);

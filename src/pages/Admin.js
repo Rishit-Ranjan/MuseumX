@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../App';
 import { INITIAL_MUSEUMS, LANGUAGE_NAMES } from '../constants';
 import { Plus, Trash2, Lock, X, User } from 'lucide-react';
-import { Language } from 'C:\\Users\\Asus\\OneDrive\\Documents\\epics_project\\museumx\\types.js';
+import { Language } from '../../types';
 const Admin = () => {
     const { isAdmin, toggleAdmin, museums, addMuseum, language, uiLabels: labels } = useContext(AppContext);
     const navigate = useNavigate();
