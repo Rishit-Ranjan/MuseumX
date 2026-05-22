@@ -473,5 +473,21 @@ export const UI_LABELS = {
 };
 export const LANGUAGE_NAMES = {
     [Language.ENGLISH]: 'English',
-    [Language.HINDI]: 'Hindi'
+    [Language.HINDI]: 'Hindi',
+    [Language.BENGALI]: 'Bengali',
+    [Language.MARATHI]: 'Marathi',
+    [Language.GUJARATI]: 'Gujarati',
+    [Language.PUNJABI]: 'Punjabi',
+    [Language.TAMIL]: 'Tamil',
+    [Language.TELUGU]: 'Telugu',
+    [Language.MALAYALAM]: 'Malayalam',
+    [Language.KANNADA]: 'Kannada',
+    [Language.URDU]: 'Urdu',
+    [Language.ODIA]: 'Odia',
+    [Language.SPANISH]: 'Spanish',
+    [Language.FRENCH]: 'French',
+    [Language.GERMAN]: 'German',
+    [Language.ARABIC]: 'Arabic',
+    [Language.CHINESE_SIMPLIFIED]: 'Chinese',
+    [Language.JAPANESE]: 'Japanese'
 };
