@@ -10,15 +10,6 @@ MuseumX is a responsive React + Vite museum exploration app built with Tailwind-
 - 🧑‍💼 Admin mode for adding new museum entries
 - 🎨 Built with React, React Router, Vite, and iconography via `lucide-react`
 
-## Project Structure
-
-- `src/App.jsx` — application context, routing, language management, and translation workflow
-- `src/constants.js` — initial museum data, gallery asset imports, and UI labels
-- `src/components/` — shared layout and reusable UI building blocks
-- `src/pages/` — page views for Home, MuseumDetail, Gallery, and Admin
-- `src/services/` — translation and local AI support helpers
-- `src/assets/images/` — museum artwork and gallery imagery
-
 ## Getting Started
 
 ### Requirements
@@ -56,8 +47,3 @@ npm run preview
 - The app uses `HashRouter` from `react-router-dom` for client-side routing.
 - Text translation is powered by `src/services/translationService.js` and is applied to labels, museum content, highlights, and gallery metadata.
 - Image assets are imported directly from `src/assets/images/` for predictable Vite bundling.
-
-## Additions
-
-To add a museum entry, extend `src/constants.js` with a new museum object and gallery assets, or use the Admin page to create entries at runtime.
-
