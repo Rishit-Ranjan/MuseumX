@@ -26,6 +26,10 @@ const getGalleryItems = (startId, count, type) => {
         let descEn = '';
         let artistEn = 'Unknown';
         let mediumEn = 'Mixed Media';
+        let titleHi = '';
+        let descHi = '';
+        let artistHi = '';
+        let mediumHi = '';
         let date = isEven ? '1992' : '2005';
         if (type === 'Tribal') {
             titleEn = `Tribal Artifact ${i + 1}`;
@@ -33,10 +37,10 @@ const getGalleryItems = (startId, count, type) => {
             artistEn = isEven ? 'Jangarh Singh Shyam' : 'Bhuri Bai';
             mediumEn = 'Natural Pigments on Wall';
             // Hindi
-            var titleHi = `जनजातीय कलाकृति ${i + 1}`;
-            var descHi = 'वन जीवन और परंपराओं को दर्शाती पारंपरिक पेंटिंग।';
-            var artistHi = isEven ? 'जंगारह सिंह श्याम' : 'भूरी बाई';
-            var mediumHi = 'प्राकृतिक रंग दीवार पर';
+            titleHi = `जनजातीय कलाकृति ${i + 1}`;
+            descHi = 'वन जीवन और परंपराओं को दर्शाती पारंपरिक पेंटिंग।';
+            artistHi = isEven ? 'जंगारह सिंह श्याम' : 'भूरी बाई';
+            mediumHi = 'प्राकृतिक रंग दीवार पर';
         }
         else if (type === 'History') {
             titleEn = `Ancient Sculpture ${i + 1}`;
@@ -45,10 +49,10 @@ const getGalleryItems = (startId, count, type) => {
             date = '3rd Century BC';
             mediumEn = 'Sandstone';
             // Hindi
-            var titleHi = `प्राचीन मूर्ति ${i + 1}`;
-            var descHi = 'मौर्य काल की नक्काशीदार पत्थर की मूर्ति।';
-            var artistHi = 'मौर्य शिल्पी';
-            var mediumHi = 'रेत पत्थर';
+            titleHi = `प्राचीन मूर्ति ${i + 1}`;
+            descHi = 'मौर्य काल की नक्काशीदार पत्थर की मूर्ति।';
+            artistHi = 'मौर्य शिल्पी';
+            mediumHi = 'रेत पत्थर';
         }
         else if (type === 'Art') {
             titleEn = `Modern Art Piece ${i + 1}`;
@@ -56,10 +60,10 @@ const getGalleryItems = (startId, count, type) => {
             artistEn = isEven ? 'S.H. Raza' : 'M.F. Husain';
             mediumEn = 'Acrylic on Canvas';
             // Hindi
-            var titleHi = `आधुनिक कला कृति ${i + 1}`;
-            var descHi = 'भारत की जीवंत संस्कृति को पकड़ता आधुनिक कला।';
-            var artistHi = isEven ? 'एस. एच. रज़ा' : 'एम. एफ. हुसैन';
-            var mediumHi = 'कैनवास पर एक्रिलिक';
+            titleHi = `आधुनिक कला कृति ${i + 1}`;
+            descHi = 'भारत की जीवंत संस्कृति को पकड़ता आधुनिक कला।';
+            artistHi = isEven ? 'एस. एच. रज़ा' : 'एम. एफ. हुसैन';
+            mediumHi = 'कैनवास पर एक्रिलिक';
         }
         else {
             titleEn = `Historical Document ${i + 1}`;
@@ -68,10 +72,10 @@ const getGalleryItems = (startId, count, type) => {
             date = '1984';
             mediumEn = 'Photograph';
             // Hindi
-            var titleHi = `ऐतिहासिक दस्तावेज़ ${i + 1}`;
-            var descHi = '1984 की घटना से अभिलेखीय फ़ोटो।';
-            var artistHi = 'भोपाल अभिलेखागार';
-            var mediumHi = 'फोटोग्राफ';
+            titleHi = `ऐतिहासिक दस्तावेज़ ${i + 1}`;
+            descHi = '1984 की घटना से अभिलेखीय फ़ोटो।';
+            artistHi = 'भोपाल अभिलेखागार';
+            mediumHi = 'फोटोग्राफ';
         }
         return {
             url: getImgUrl(startId + i),
