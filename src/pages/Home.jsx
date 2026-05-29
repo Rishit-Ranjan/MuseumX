@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, ArrowRight, Search, ChevronLeft, ChevronRight, Star, Sparkles, MessageSquare, Send, X, Bot, Trash2 } from 'lucide-react';
-import { createLocalSession, sendMessageToLocalAI } from '../services/localAIService';
+import { MapPin, ArrowRight, Search, ChevronLeft, ChevronRight, Star, Sparkles } from 'lucide-react';
+import AICurator from '../components/AICurator';
 import { AppContext } from '../App';
 import { Language } from '../../types';
 
@@ -69,50 +69,18 @@ const Home = () => {
   const { museums = [], language, uiLabels: labels } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState([]);
-  const [chatInput, setChatInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+  const generalContext = useMemo(() => museums.map(m => 
+    `${m.name[language] || m.name[Language.ENGLISH]}: ${m.shortDescription[language] || m.shortDescription[Language.ENGLISH]}`
+  ).join('. '), [museums, language]);
 
-  const toggleChat = () => {
-    if (!isChatOpen && chatMessages.length === 0) {
-      const greeting = labels.initialGreeting?.replace('{museum}', 'MuseumX') || 'Hello! I am your AI Curator.';
-      setChatMessages([{ role: 'bot', text: greeting }]);
-    }
-    setIsChatOpen(!isChatOpen);
-  };
-
-  const clearChat = () => {
-    const greeting = labels.initialGreeting?.replace('{museum}', 'MuseumX') || 'Hello! I am your AI Curator.';
-    setChatMessages([{ role: 'bot', text: greeting }]);
-  };
-
-  const handleSend = async (e) => {
-    e.preventDefault();
-    if (!chatInput.trim()) return;
-
-    const userMsg = chatInput;
-    setChatInput('');
-    setChatMessages(prev => [...prev, { role: 'user', text: userMsg }]);
-    setIsTyping(true);
-
-    const generalContext = museums.map(m => 
-      `${m.name[language] || m.name[Language.ENGLISH]}: ${m.shortDescription[language] || m.shortDescription[Language.ENGLISH]}`
-    ).join('. ');
-    
-    const session = createLocalSession('MuseumX', generalContext);
-    const response = await sendMessageToLocalAI(session, userMsg);
-    
-    setChatMessages(prev => [...prev, { role: 'bot', text: response }]);
-    setIsTyping(false);
-  };
-
-  const filtered = museums.filter((m) => {
-    const name = m.name[language] || m.name[Language.ENGLISH] || '';
-    const location = m.location[language] || m.location[Language.ENGLISH] || '';
-    return name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-           location.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  const filtered = useMemo(() => {
+    const term = searchTerm.toLowerCase();
+    return museums.filter((m) => {
+      const name = (m.name[language] || m.name[Language.ENGLISH] || '').toLowerCase();
+      const location = (m.location[language] || m.location[Language.ENGLISH] || '').toLowerCase();
+      return name.includes(term) || location.includes(term);
+    });
+  }, [museums, searchTerm, language]);
 
   return (
     <div className="pb-20">
@@ -176,74 +144,7 @@ const Home = () => {
         {filtered.length === 0 && <div className="text-center py-20 text-slate-500">{labels.noResults || 'No museums found matching your search.'}</div>}
       </section>
 
-      {/* Floating Chat Button */}
-      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end">
-        {isChatOpen && (
-          <div className="bg-slate-900 border border-slate-700 w-80 md:w-96 h-[500px] rounded-2xl shadow-2xl flex flex-col mb-4 overflow-hidden animate-in slide-in-from-bottom-5">
-            {/* Header */}
-            <div className="bg-amber-500 p-4 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-slate-900 font-bold">
-                <Bot size={20} />
-                <span>{labels.aiHeader}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button onClick={clearChat} className="text-slate-900/70 hover:text-slate-900 transition-colors" title="Clear chat">
-                  <Trash2 size={18} />
-                </button>
-                <button onClick={() => setIsChatOpen(false)} className="text-slate-900/70 hover:text-slate-900 transition-colors">
-                  <X size={20} />
-                </button>
-              </div>
-            </div>
-            
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/50">
-              {chatMessages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${
-                    msg.role === 'user' 
-                      ? 'bg-amber-500 text-slate-900 rounded-tr-none' 
-                      : 'bg-slate-800 text-slate-200 rounded-tl-none'
-                  }`}>
-                    {msg.text}
-                  </div>
-                </div>
-              ))}
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="bg-slate-800 text-slate-400 p-3 rounded-2xl rounded-tl-none text-sm italic">
-                    {labels.processing}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Input */}
-            <form onSubmit={handleSend} className="p-4 border-t border-slate-800 bg-slate-900">
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  placeholder={labels.chatPlaceholder}
-                  className="flex-1 bg-slate-800 border border-slate-700 rounded-full px-4 py-2 text-white text-sm focus:outline-none focus:border-amber-500"
-                />
-                <button type="submit" className="bg-amber-500 p-2 rounded-full text-slate-900 hover:bg-amber-400 transition-colors">
-                  <Send size={18} />
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-        
-        <button
-          onClick={toggleChat}
-          className="bg-amber-500 hover:bg-amber-400 text-slate-900 p-4 rounded-full shadow-lg hover:scale-110 transition-all flex items-center gap-2 font-bold"
-        >
-          <MessageSquare size={24} />
-          <span className="hidden md:inline">{labels.askCurator}</span>
-        </button>
-      </div>
+      <AICurator context={generalContext} />
     </div>
   );
 };
