@@ -28,7 +28,7 @@ const Contact = () => {
                     <div className="space-y-4">
                         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">{labels.contactHeader || 'Get in touch with MuseumX'}</h1>
                         <p className="max-w-2xl text-slate-400 leading-relaxed text-lg">
-                            {labels.contactSubheader || 'Whether you have a question about our museums, need help planning a visit, or want to share feedback, our team is here to support you.'}
+                            {labels.contactSubheader || 'Whether you have a question about the museums, need help planning a visit, or want to share feedback, our team is here to support you.'}
                         </p>
                     </div>
 
@@ -47,14 +47,14 @@ const Contact = () => {
                                 <Mail size={22} />
                             </div>
                             <h2 className="text-xl font-semibold text-white mb-2">{labels.email || 'Email'}</h2>
-                            <p className="text-slate-400 leading-relaxed">hello@museumx.app</p>
+                            <p className="text-slate-400 leading-relaxed">support-museumx@gmail.com</p>
                         </div>
                         <div className="rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-xl shadow-black/10">
                             <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-300 mb-4">
                                 <Phone size={22} />
                             </div>
                             <h2 className="text-xl font-semibold text-white mb-2">{labels.call || 'Call'}</h2>
-                            <p className="text-slate-400 leading-relaxed">+91 98765 43210</p>
+                            <p className="text-slate-400 leading-relaxed">+91 9876543210</p>
                         </div>
                         <div className="rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-xl shadow-black/10">
                             <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-300 mb-4">
