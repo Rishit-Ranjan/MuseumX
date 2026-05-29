@@ -1,5 +1,5 @@
 // Securely load the key from environment variables
-const API_KEY = import.meta.env.VITE_GOOGLE_TRANSLATE_API_KEY || process.env.GOOGLE_TRANSLATE_API_KEY || '';
+const API_KEY = import.meta.env.VITE_GOOGLE_TRANSLATE_API_KEY || '';
 export const translateText = async (text, target) => {
     if (!text)
         return '';
