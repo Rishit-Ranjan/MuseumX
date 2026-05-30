@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "amqplib": "^2.0.1",
+    "limes": "^6.1.10",
     "lucide-react": "^0.556.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
