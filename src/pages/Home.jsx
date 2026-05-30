@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, ArrowRight, Search, ChevronLeft, ChevronRight, Star, Sparkles, MessageSquare, Send, X, Bot, Trash2 } from 'lucide-react';
+import { MapPin, ArrowRight, Search, ChevronLeft, ChevronRight, Star, Sparkles, MessageSquare, Send, X, Bot, Trash2, Heart } from 'lucide-react';
 import { createLocalSession, sendMessageToLocalAI } from '../services/localAIService';
 import { AppContext } from '../App';
 import { Language } from '../../types';
@@ -66,7 +66,7 @@ const ExhibitionSlider = ({ museums = [] }) => {
 };
 
 const Home = () => {
-  const { museums = [], language, uiLabels: labels } = useContext(AppContext);
+  const { museums = [], language, uiLabels: labels, favorite= [], toggleFavorite } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState('');
 
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -154,6 +154,19 @@ const Home = () => {
           {filtered.map((museum) => (
             <Link key={museum.id} to={`/museum/${museum.id}`} className="group bg-slate-900/50 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
               <div className="relative h-64 overflow-hidden">
+                <button 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleFavorite(museum.id);
+                  }} 
+                  className="absolute top-4 right-4 z-30 p-2.5 rounded-full bg-slate-950/50 backdrop-blur-md border border-white/10 text-white hover:scale-110 transition-transform active:scale-95 group/heart"
+                >
+                  <Heart 
+                    size={20} 
+                    className={`${favorite.includes(museum.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} 
+                  />
+                </button>
                 <img src={museum.image} alt={museum.name[language] || museum.name[Language.ENGLISH]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-90" />
                 <div className="absolute bottom-5 left-5 right-5 z-10">

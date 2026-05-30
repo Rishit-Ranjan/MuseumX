@@ -139,6 +139,16 @@ const App = () => {
     }, []);
 
     const toggleAdmin = useCallback(() => setIsAdmin(current => !current), []);
+    
+    const [favorites, setFavorites] = useState([]);
+
+    const toggleFavorite = useCallback((museumID) => {
+        setFavorites(prev => 
+            prev.includes(museumID) 
+                ? prev.filter(id => id !== museumID) 
+                : [...prev, museumID]
+        );
+    }, []);
 
     const contextValue = useMemo(() => ({
         language,
@@ -147,8 +157,10 @@ const App = () => {
         addMuseum,
         isAdmin,
         toggleAdmin,
-        uiLabels
-    }), [language, handleSetLanguage, museums, addMuseum, isAdmin, toggleAdmin, uiLabels]);
+        uiLabels,
+        favorite: favorites,
+        toggleFavorite
+    }), [language, handleSetLanguage, museums, addMuseum, isAdmin, toggleAdmin, uiLabels, favorites, toggleFavorite]);
 
     return (<AppContext.Provider value={contextValue}>
         <Router>
